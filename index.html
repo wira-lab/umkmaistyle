@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>UMKM AI Style - Platform Fashion Advisor Berbasis AI untuk UMKM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ========== RESET & GLOBAL ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
+      background-color: #f7f3ee;
+      color: #1f1a16;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img { max-width: 100%; display: block; }
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* ========== HEADER / NAV ========== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247,243,238,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e2d4c6;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      flex-wrap: wrap;
+      padding: .75rem 0;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .logo span { color: #b7773c; }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      font-size: .9rem;
+      align-items: center;
+    }
+    .nav-link {
+      padding: .3rem .7rem;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+    .nav-link.active {
+      background: #b7773c;
+      color: #fff;
+    }
+    .nav-link:not(.active):hover {
+      background: #efe2d5;
+    }
+    .btn-secondary {
+      padding: .4rem .9rem;
+      border-radius: 999px;
+      border: 1px solid #b7773c;
+      background: transparent;
+      color: #b7773c;
+      font-size: .85rem;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: #f0e3d8;
+    }
+
+    main { padding-bottom: 3rem; }
+
+    /* Semua "halaman" */
+    .page {
+      display: none;
+      padding: 3rem 0;
+    }
+    .page.active-section {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: .4rem;
+    }
+    .section-subtitle {
+      font-size: .9rem;
+      color: #75665a;
+      margin-bottom: 1.2rem;
+    }
+
+    .card {
+      background-color: #fdf9f4;
+      border-radius: 1.1rem;
+      border: 1px solid #e2d4c6;
+      padding: 1rem;
+      font-size: .9rem;
+    }
+    .badge-pill {
+      display: inline-block;
+      font-size: .78rem;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      background-color: #efe1d2;
+      margin-bottom: .4rem;
+    }
+
+    .btn-primary {
+      padding: .5rem 1.1rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background-color: #b7773c;
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 500;
+      box-shadow: 0 6px 16px rgba(183,119,60,.35);
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      background-color: #a36632;
+    }
+
+    footer {
+      border-top: 1px solid #e2d4c6;
+      background-color: #f4ece4;
+      padding: 1.1rem 0;
+      font-size: .8rem;
+      color: #7e7065;
+    }
+
+    /* ========== HERO (HOME) ========== */
+    .hero {
+      padding-top: 2rem;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.4rem;
+      align-items: center;
+    }
+    .hero-tag {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #b7773c;
+      margin-bottom: .6rem;
+    }
+    .hero-title {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: .7rem;
+    }
+    .hero-desc {
+      font-size: .96rem;
+      color: #5f5349;
+      margin-bottom: 1.2rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-bottom: 1.2rem;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      font-size: .82rem;
+      color: #7b6d63;
+    }
+    .hero-meta strong { display: block; font-size: .88rem; }
+    .hero-badge {
+      display: inline-block;
+      margin-top: .8rem;
+      font-size: .78rem;
+      padding: .25rem .8rem;
+      border-radius: 999px;
+      border: 1px dashed #cfb7a0;
+      background: #fdf7f1;
+      color: #846b58;
+    }
+    .hero-panel {
+      border-radius: 1.4rem;
+      padding: 1.4rem;
+      background: radial-gradient(circle at top left,#fdf7f1,#dfd1c3);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.1);
+      display: grid;
+      gap: 1rem;
+    }
+    .hero-panel h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: .3rem;
+    }
+    .hero-panel p {
+      font-size: .85rem;
+      color: #6c5b4c;
+    }
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .5rem;
+    }
+    .chip {
+      font-size: .78rem;
+      padding: .25rem .6rem;
+      border-radius: 999px;
+      background-color: rgba(255,255,255,0.9);
+      border: 1px solid #ddc7b0;
+    }
+    .hero-box {
+      border-radius: 1rem;
+      background-color: rgba(255,255,255,.94);
+      padding: .8rem .9rem;
+      border: 1px solid #e2d4c6;
+      font-size: .83rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 1.2rem;
+    }
+
+    /* ========== AI STYLE PAGE ========== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+    }
+    .quiz-question { margin-bottom: 1rem; }
+    .quiz-label {
+      font-size: .9rem;
+      font-weight: 500;
+      margin-bottom: .35rem;
+    }
+    .quiz-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+    .quiz-options button {
+      border-radius: 999px;
+      border: 1px solid #cdbcac;
+      background: #fff;
+      padding: .3rem .8rem;
+      font-size: .83rem;
+      cursor: pointer;
+    }
+    .quiz-options button.selected {
+      background: #b7773c;
+      border-color: #b7773c;
+      color: #fff;
+    }
+    .quiz-input {
+      width: 100%;
+      padding: .4rem .6rem;
+      border-radius: .7rem;
+      border: 1px solid #cdbcac;
+      background: #fff;
+      font-size: .85rem;
+    }
+    .quiz-note {
+      font-size: .78rem;
+      color: #7b6c5f;
+      margin-top: .3rem;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .result-card {
+      background: #fdf9f4;
+      border-radius: 1rem;
+      border: 1px solid #e2d4c6;
+      padding: .9rem;
+      font-size: .85rem;
+    }
+    .result-card h4 {
+      font-size: .95rem;
+      margin-bottom: .3rem;
+    }
+    .result-tag {
+      font-size: .78rem;
+      padding: .18rem .55rem;
+      border-radius: 999px;
+      background: #efe1d2;
+      display: inline-block;
+      margin-bottom: .4rem;
+    }
+    .result-card ul {
+      padding-left: 1.1rem;
+      margin-bottom: .3rem;
+    }
+    .result-small {
+      font-size: .78rem;
+      color: #7a6a5d;
+    }
+    .pill {
+      display: inline-block;
+      font-size: .8rem;
+      padding: .18rem .55rem;
+      border-radius: 999px;
+      background: #efe1d2;
+      margin-right: .3rem;
+      margin-top: .2rem;
+    }
+    .profile-box {
+      margin-top: 1rem;
+      font-size: .83rem;
+      color: #75665a;
+      background: #fbf3ea;
+      border-radius: 1rem;
+      border: 1px dashed #d3c1af;
+      padding: .8rem .9rem;
+    }
+
+    /* ========== AI CHATBOT PAGE ========== */
+    .layout-chat {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+    }
+    .chat-window {
+      background: #fdf9f4;
+      border-radius: 1.1rem;
+      border: 1px solid #e2d4c6;
+      display: flex;
+      flex-direction: column;
+      height: 430px;
+    }
+    .chat-header {
+      padding: .6rem .9rem;
+      border-bottom: 1px solid #e2d4c6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .85rem;
+    }
+    .chat-left {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+    .chat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #4caf50;
+    }
+    .mode-toggle {
+      display: flex;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #d2c3b5;
+      font-size: .78rem;
+    }
+    .mode-toggle button {
+      flex: 1;
+      padding: .25rem .5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .mode-toggle button.active {
+      background: #b7773c;
+      color: #fff;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: .7rem .9rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      font-size: .83rem;
+    }
+    .chat-bubble {
+      max-width: 80%;
+      padding: .45rem .7rem;
+      border-radius: .9rem;
+      line-height: 1.4;
+    }
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: #b7773c;
+      color: #fff;
+      border-bottom-right-radius: .2rem;
+    }
+    .chat-bubble.bot {
+      align-self: flex-start;
+      background: #fff;
+      border: 1px solid #e2d4c6;
+      border-bottom-left-radius: .2rem;
+    }
+    .chat-input-row {
+      padding: .6rem .7rem;
+      border-top: 1px solid #e2d4c6;
+      display: flex;
+      gap: .4rem;
+      align-items: center;
+    }
+    .chat-input {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid #cdbcac;
+      padding: .35rem .7rem;
+      background: #fff;
+      font-size: .83rem;
+    }
+    .quick-row {
+      margin-top: .5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      font-size: .78rem;
+    }
+    .quick-btn {
+      border-radius: 999px;
+      border: 1px solid #d2c3b5;
+      background: #fff;
+      padding: .18rem .55rem;
+      cursor: pointer;
+    }
+
+    /* ========== KATALOG PAGE ========== */
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1rem;
+      font-size: .83rem;
+    }
+    .filter-row select,
+    .filter-row input {
+      padding: .35rem .6rem;
+      border-radius: .7rem;
+      border: 1px solid #cdbcac;
+      background: #fff;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      background: #fdf9f4;
+      border-radius: 1rem;
+      border: 1px solid #e2d4c6;
+      padding: .8rem;
+      font-size: .85rem;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .product-name { font-weight: 600; font-size: .92rem; }
+    .product-umkm { font-size: .78rem; color: #7a6b60; }
+    .product-price { font-size: .9rem; color: #b7773c; font-weight: 600; }
+    .product-tags { font-size: .76rem; }
+    .tag {
+      display: inline-block;
+      padding: .16rem .45rem;
+      border-radius: 999px;
+      background: #efe1d2;
+      margin-right: .18rem;
+      margin-top: .1rem;
+    }
+    .product-footer {
+      margin-top: .3rem;
+      display: flex;
+      justify-content: space-between;
+      gap: .4rem;
+      align-items: center;
+    }
+    .ai-highlight {
+      margin-top: 1.8rem;
+      background: #fdf9f4;
+      border-radius: 1rem;
+      border: 1px solid #e2d4c6;
+      padding: 1rem;
+      font-size: .88rem;
+    }
+    .ai-highlight h3 {
+      font-size: 1rem;
+      margin-bottom: .35rem;
+    }
+    .ai-highlight ul {
+      padding-left: 1.1rem;
+      margin-top: .3rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-2,
+      .layout-chat {
+        grid-template-columns: 1fr;
+      }
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .results-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+      .product-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+      .hero { padding-top: 1.4rem; }
+    }
+    @media (max-width: 640px) {
+      .results-grid,
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-title { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo">UMKM<span>AI</span>Style</div>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="showSection('home', this)">Beranda</button>
+        <button class="nav-link" onclick="showSection('ai-style', this)">AI Style</button>
+        <button class="nav-link" onclick="showSection('ai-chat', this)">AI Chatbot</button>
+        <button class="nav-link" onclick="showSection('katalog', this)">Katalog UMKM</button>
+        <button class="btn-secondary" onclick="alert('Login/Daftar bisa ditambahkan di versi lanjutan.')">
+          Login / Daftar
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ========== PAGE: HOME ========== -->
+  <section id="home" class="page active-section">
+    <div class="container hero">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-tag">Website Pemanfaatan AI untuk UMKM Fashion</div>
+          <h1 class="hero-title">
+            Fashion Advisor berbasis AI<br>untuk bantu UMKM menjangkau Gen Z.
+          </h1>
+          <p class="hero-desc">
+            Platform ini memadukan <strong>AI Style Recommender</strong> dan
+            <strong>AI Chatbot</strong> untuk membantu Gen Z menemukan outfit yang pas,
+            sekaligus memberi insight dan visibilitas lebih bagi UMKM fashion lokal.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="showSection('ai-style', document.querySelectorAll('.nav-link')[1])">
+              Coba AI Style Recommender
+            </button>
+            <button class="btn-secondary" onclick="showSection('ai-chat', document.querySelectorAll('.nav-link')[2])">
+              Ngobrol dengan AI Chatbot
+            </button>
+          </div>
+          <div class="hero-meta">
+            <div>
+              <strong>Fokus Pengguna</strong>
+              <span>Rekomendasi outfit personal: gaya, warna, budget, dan occasion.</span>
+            </div>
+            <div>
+              <strong>Fokus UMKM</strong>
+              <span>Produk muncul ke orang yang tepat, dengan rekomendasi & insight AI.</span>
+            </div>
+          </div>
+          <div class="hero-badge">
+            Cocok sebagai proyek tugas “Pemanfaatan AI untuk UMKM” di bidang fashion & digital marketing.
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div>
+            <h3>Dua Modul AI Utama</h3>
+            <p>
+              <strong>AI Style Recommender:</strong> mesin yang mencocokkan preferensi Gen Z
+              dengan katalog produk UMKM.<br>
+              <strong>AI Chatbot:</strong> stylist digital yang bisa diajak diskusi soal outfit
+              dan strategi produk.
+            </p>
+            <div class="hero-chip-row">
+              <div class="chip">Personalized Outfit</div>
+              <div class="chip">UMKM-Centric</div>
+              <div class="chip">Data-Driven</div>
+              <div class="chip">Gen Z Friendly</div>
+            </div>
+          </div>
+          <div class="hero-box">
+            <strong>Contoh Skenario Pengguna</strong>
+            <p style="margin-top:.2rem;">
+              Seorang mahasiswa ingin outfit Korean casual untuk kuliah, budget 200K.  
+              AI membaca preferensi, memilih produk UMKM yang cocok, dan menggabungkannya
+              menjadi 3 set outfit yang berbeda.
+            </p>
+          </div>
+          <div class="hero-box">
+            <strong>Contoh Skenario UMKM</strong>
+            <p style="margin-top:.2rem;">
+              UMKM bisa melihat bahwa produknya sering direkomendasikan untuk Gen Z
+              yang suka gaya minimalis, lalu menambah koleksi sesuai tren yang dibaca AI.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="padding-top:2rem;">
+      <h2 class="section-title">Ringkasan Fitur Utama Website</h2>
+      <p class="section-subtitle">
+        Setiap menu dipecah menjadi area terpisah dalam satu file untuk menjelaskan pemanfaatan AI secara lebih mendalam.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="badge-pill">AI Style Recommender</div>
+          <h3>Rekomendasi Outfit untuk Gen Z</h3>
+          <p>
+            Sistem membaca gaya, occasion, budget, dan preferensi warna, lalu menghasilkan beberapa set outfit dari
+            produk UMKM. Di bagian <strong>AI Style</strong>, kamu bisa melihat simulasi quiz, logika rekomendasi,
+            dan contoh output yang terbagi menjadi:
+          </p>
+          <ul style="padding-left:1.1rem;margin-top:.4rem;font-size:.86rem;">
+            <li>Look utama (paling sesuai preferensi).</li>
+            <li>Look budget-friendly.</li>
+            <li>Look alternatif untuk occasion lain.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge-pill">AI Chatbot</div>
+          <h3>Asisten Fashion & UMKM</h3>
+          <p>
+            Di bagian <strong>AI Chatbot</strong>, kamu bisa mencoba chatbot dengan dua mode:
+          </p>
+          <ul style="padding-left:1.1rem;margin-top:.4rem;font-size:.86rem;">
+            <li><strong>Mode Pengguna:</strong> tanya soal outfit, gaya, budget, dan rekomendasi.</li>
+            <li><strong>Mode UMKM:</strong> tanya soal strategi produk, tren gaya, dan insight data sederhana.</li>
+          </ul>
+          <p style="margin-top:.3rem;font-size:.83rem;color:#7a6b60;">
+            Chatbot merespons dengan bahasa natural sebagai contoh bagaimana LLM dapat dipakai dalam konteks UMKM.
+          </p>
+        </div>
+        <div class="card">
+          <div class="badge-pill">Katalog UMKM</div>
+          <h3>Basis Data Produk untuk AI</h3>
+          <p>
+            Bagian <strong>Katalog UMKM</strong> berisi contoh produk yang sudah dilabeli gaya, occasion, dan harga.
+            Data inilah yang menjadi “bahan baku” modul rekomendasi dan chatbot, sehingga AI tidak hanya menjawab secara
+            umum, tetapi selalu merujuk ke produk UMKM nyata.
+          </p>
+          <p style="margin-top:.3rem;font-size:.83rem;color:#7a6b60;">
+            Ke depannya, katalog ini bisa dihubungkan ke database atau sistem manajemen produk asli.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE: AI STYLE ========== -->
+  <section id="ai-style" class="page">
+    <div class="container">
+      <h1 class="section-title">AI Style Recommender untuk UMKM Fashion</h1>
+      <p class="section-subtitle">
+        Bagian ini mensimulasikan modul AI yang membaca preferensi pengguna Gen Z dan mengubahnya menjadi
+        rekomendasi outfit yang bersumber dari produk-produk UMKM.
+      </p>
+
+      <div class="grid-2">
+        <!-- QUIZ -->
+        <div class="card">
+          <div class="badge-pill">Langkah 1 · Isi Profil & Preferensi</div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">1. Kamu?</div>
+            <div class="quiz-options" id="gender-options">
+              <button type="button" data-value="female">Perempuan</button>
+              <button type="button" data-value="male">Laki-laki</button>
+              <button type="button" data-value="unisex">Prefer diabaikan</button>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">2. Bentuk tubuh (kira-kira)?</div>
+            <div class="quiz-options" id="body-options">
+              <button type="button" data-value="slim">Cenderung kurus</button>
+              <button type="button" data-value="average">Rata-rata</button>
+              <button type="button" data-value="curvy">Berisi / curvy</button>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">3. Gaya yang paling mendekati kamu?</div>
+            <div class="quiz-options" id="style-options">
+              <button type="button" data-value="korean">Korean Casual</button>
+              <button type="button" data-value="streetwear">Streetwear</button>
+              <button type="button" data-value="minimalist">Minimalist</button>
+              <button type="button" data-value="hijab">Hijab Modern</button>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">4. Outfit ini terutama untuk ke mana?</div>
+            <div class="quiz-options" id="occasion-options">
+              <button type="button" data-value="kuliah">Kuliah</button>
+              <button type="button" data-value="hangout">Hangout</button>
+              <button type="button" data-value="ngedate">Ngedate</button>
+              <button type="button" data-value="konser">Konser</button>
+              <button type="button" data-value="formal">Acara Formal</button>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">5. Budget total 1 set outfit?</div>
+            <div class="quiz-options" id="budget-options">
+              <button type="button" data-value="100">≤ Rp100K</button>
+              <button type="button" data-value="200">Rp100K–Rp200K</button>
+              <button type="button" data-value="300">Rp200K–Rp300K</button>
+              <button type="button" data-value="400">≥ Rp300K</button>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <div class="quiz-label">6. Warna / nuansa yang kamu suka?</div>
+            <input id="color-input" class="quiz-input" placeholder="Contoh: earth tone, pastel, monochrome..." />
+          </div>
+
+          <button class="btn-primary" onclick="generateRecommendations()">Generate Rekomendasi Outfit</button>
+          <button class="btn-secondary" style="margin-left:.5rem;" onclick="saveProfile()">
+            Simpan Profil Style (demo)
+          </button>
+          <div class="quiz-note">
+            Tombol “Simpan Profil Style” hanya demo menggunakan <em>localStorage</em> sebagai contoh sistem yang mengingat preferensi.
+          </div>
+        </div>
+
+        <!-- PENJELASAN & PROFIL TERSIMPAN -->
+        <div class="card">
+          <div class="badge-pill">Bagaimana AI Membaca Input Ini?</div>
+          <p style="margin-bottom:.4rem;">
+            Di implementasi sesungguhnya, setiap jawaban di atas diubah menjadi fitur:
+          </p>
+          <ul style="padding-left:1.1rem;margin-bottom:.4rem;font-size:.86rem;">
+            <li><strong>Gender & bentuk tubuh</strong> → memengaruhi potongan baju yang direkomendasikan.</li>
+            <li><strong>Gaya & occasion</strong> → menentukan kategori produk UMKM yang diprioritaskan.</li>
+            <li><strong>Budget</strong> → batas maksimum kombinasi harga total outfit.</li>
+            <li><strong>Preferensi warna</strong> → filter warna produk (earth tone, pastel, dsb.).</li>
+          </ul>
+          <p style="font-size:.83rem;color:#7a6b60;">
+            Engine AI kemudian mencocokkan fitur-fitur ini dengan katalog produk UMKM, sehingga setiap pengguna melihat
+            produk yang berbeda, meskipun tampilan website-nya sama.
+          </p>
+
+          <div id="saved-profile" class="profile-box" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- HASIL REKOMENDASI -->
+      <div style="margin-top:1.6rem;">
+        <h2 class="section-title" style="font-size:1.15rem;">Output: 3 Set Outfit Rekomendasi</h2>
+        <p class="section-subtitle" id="rec-subtitle">
+          Setelah kamu mengisi quiz, sistem akan menampilkan 3 set: Look Utama, Look Budget-Friendly, dan Look Alternatif Occasion.
+        </p>
+        <div class="results-grid" id="rec-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE: AI CHATBOT ========== -->
+  <section id="ai-chat" class="page">
+    <div class="container">
+      <h1 class="section-title">AI Chatbot – Asisten Fashion & UMKM</h1>
+      <p class="section-subtitle">
+        Chatbot ini mensimulasikan bagaimana model AI (LLM) bisa membantu dua pihak sekaligus:
+        <strong>Pengguna</strong> yang butuh rekomendasi outfit, dan <strong>UMKM</strong> yang butuh insight bisnis.
+      </p>
+
+      <div class="layout-chat">
+        <!-- CHAT -->
+        <div class="chat-window">
+          <div class="chat-header">
+            <div class="chat-left">
+              <div class="chat-dot"></div>
+              <span id="mode-label">Mode: Pengguna (Fashion)</span>
+            </div>
+            <div class="mode-toggle">
+              <button id="mode-user" class="active" onclick="setMode('user')">Pengguna</button>
+              <button id="mode-umkm" onclick="setMode('umkm')">UMKM</button>
+            </div>
+          </div>
+          <div id="chat-messages" class="chat-messages">
+            <div class="chat-bubble bot">
+              Hai! 👋 Aku AI Stylist & UMKM Advisor.  
+              Pilih dulu mode di kanan atas: <strong>Pengguna</strong> atau <strong>UMKM</strong>, lalu kirim pertanyaanmu.
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input id="chat-input" class="chat-input" placeholder="Tulis pesanmu di sini..." />
+            <button class="btn-primary" onclick="handleChatSend()">Kirim</button>
+          </div>
+        </div>
+
+        <!-- PENJELASAN + QUICK TIPS -->
+        <div class="card">
+          <div class="badge-pill">Bagaimana Chatbot Ini Bekerja?</div>
+          <p style="margin-bottom:.45rem;">
+            Secara konsep, chatbot ini terhubung ke dua sumber informasi:
+          </p>
+          <ul style="padding-left:1.1rem;margin-bottom:.45rem;font-size:.86rem;">
+            <li>
+              <strong>Modul rekomendasi produk</strong> → agar jawaban untuk pengguna selalu mengarah ke produk UMKM nyata
+              (bukan jawaban general).
+            </li>
+            <li>
+              <strong>Data insight UMKM</strong> → agar chatbot bisa menjawab pertanyaan seperti
+              “produk mana yang paling disukai Gen Z?” atau “range harga yang paling diminati?”
+            </li>
+          </ul>
+          <p style="font-size:.83rem;color:#7a6b60;margin-bottom:.4rem;">
+            Di halaman ini, logika masih disimulasikan di sisi front-end (JavaScript), namun strukturnya sudah mirip
+            dengan integrasi ke API LLM dan database di dunia nyata.
+          </p>
+
+          <div class="badge-pill">Contoh Pertanyaan Cepat</div>
+          <div class="quick-row">
+            <button class="quick-btn" onclick="fillAndSend('Aku mau outfit Korean buat kuliah, budget 200K, cowok.')">
+              Korean kuliah 200K (cowok)
+            </button>
+            <button class="quick-btn" onclick="fillAndSend('Aku cewek berhijab, mau look simple buat ngedate, budget 250K.')">
+              Hijab ngedate 250K
+            </button>
+            <button class="quick-btn" onclick="setMode('umkm'); fillAndSend('Sebagai UMKM, produk fashion apa yang sebaiknya saya fokuskan untuk Gen Z?')">
+              (UMKM) Produk fokus Gen Z
+            </button>
+            <button class="quick-btn" onclick="setMode('umkm'); fillAndSend('Bagaimana AI di platform ini bisa meningkatkan penjualan UMKM saya?')">
+              (UMKM) AI & penjualan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE: KATALOG ========== -->
+  <section id="katalog" class="page">
+    <div class="container">
+      <h1 class="section-title">Katalog Produk UMKM</h1>
+      <p class="section-subtitle">
+        Katalog ini adalah contoh dataset sederhana yang dibaca oleh modul AI rekomendasi dan AI chatbot.
+        Setiap produk dilengkapi label gaya, occasion, dan harga agar lebih mudah dicocokkan dengan preferensi pengguna.
+      </p>
+
+      <div class="filter-row">
+        <select id="filter-style" onchange="filterProducts()">
+          <option value="">Gaya: Semua</option>
+          <option value="Korean Casual">Korean Casual</option>
+          <option value="Streetwear">Streetwear</option>
+          <option value="Minimalist">Minimalist</option>
+          <option value="Hijab Modern">Hijab Modern</option>
+        </select>
+        <select id="filter-occasion" onchange="filterProducts()">
+          <option value="">Occasion: Semua</option>
+          <option value="Kuliah">Kuliah</option>
+          <option value="Hangout">Hangout</option>
+          <option value="Konser">Konser</option>
+          <option value="Formal">Formal</option>
+          <option value="Daily">Daily</option>
+        </select>
+        <select id="filter-price" onchange="filterProducts()">
+          <option value="">Harga: Semua</option>
+          <option value="low">≤ Rp100K</option>
+          <option value="mid">Rp100K–Rp200K</option>
+          <option value="high">≥ Rp200K</option>
+        </select>
+        <input id="search-input" placeholder="Cari nama produk / UMKM..." oninput="filterProducts()" />
+      </div>
+
+      <div id="product-grid" class="product-grid">
+        <!-- Diisi via JS -->
+      </div>
+
+      <div class="ai-highlight">
+        <h3>Bagaimana AI Memanfaatkan Katalog Ini?</h3>
+        <p>
+          Setiap produk di atas bukan sekadar data statis. Pada sistem AI, produk–produk tersebut dianalisis dan diberi
+          bobot relevansi terhadap preferensi pengguna. Contohnya:
+        </p>
+        <ul>
+          <li>
+            Oversize shirt dengan label <strong>Korean Casual</strong> dan <strong>Kuliah</strong> akan sering muncul untuk
+            pengguna yang memilih gaya Korean dan occasion kuliah.
+          </li>
+          <li>
+            Produk dengan harga di range Rp100K–Rp200K akan didahulukan ketika pengguna mengisi budget yang sama.
+          </li>
+          <li>
+            Jika sebuah produk sering diklik tapi jarang dibeli, chatbot UMKM dapat mengingatkan agar pemilik mengecek
+            ulang foto, deskripsi, atau harga produk tersebut.
+          </li>
+        </ul>
+        <p style="margin-top:.4rem;">
+          Di tugas atau laporanmu, bagian ini bisa dijelaskan sebagai “basis data produk” yang menjadi input utama bagi
+          modul AI Style dan AI Chatbot.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;gap:.7rem;flex-wrap:wrap;">
+    <div>© 2025 · UMKM AI Style – Prototipe Pemanfaatan AI untuk UMKM Fashion.</div>
+    <div>Berisi modul AI Style Recommender, AI Chatbot, dan Katalog UMKM dalam satu halaman.</div>
+  </div>
+</footer>
+
+<script>
+  /* ========== NAV / PAGE SWITCH ========== */
+  function showSection(id, btn) {
+    document.querySelectorAll('.page').forEach(sec => {
+      sec.classList.toggle('active-section', sec.id === id);
+    });
+    if (btn) {
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  }
+
+  /* ========== UTIL SELECTABLE BUTTONS (AI STYLE) ========== */
+  function makeSelectableGroup(id) {
+    const c = document.getElementById(id);
+    if (!c) return;
+    const btns = c.querySelectorAll("button");
+    btns.forEach(b=>{
+      b.addEventListener("click",()=>{
+        btns.forEach(x=>x.classList.remove("selected"));
+        b.classList.add("selected");
+      });
+    });
+  }
+  ["gender-options","body-options","style-options","occasion-options","budget-options"].forEach(makeSelectableGroup);
+
+  function getSelectedValue(id){
+    const c=document.getElementById(id);
+    if(!c) return null;
+    const s=c.querySelector("button.selected");
+    return s?s.getAttribute("data-value"):null;
+  }
+
+  function generateRecommendations(){
+    const gender=getSelectedValue("gender-options");
+    const body=getSelectedValue("body-options");
+    const style=getSelectedValue("style-options");
+    const occasion=getSelectedValue("occasion-options");
+    const budget=getSelectedValue("budget-options");
+    const color=document.getElementById("color-input").value.trim();
+
+    if(!style || !occasion || !budget){
+      alert("Minimal isi gaya, occasion, dan budget.");
+      return;
+    }
+
+    const recSubtitle=document.getElementById("rec-subtitle");
+    const recGrid=document.getElementById("rec-grid");
+    recGrid.innerHTML="";
+
+    recSubtitle.textContent =
+      "AI menyusun 3 set outfit berdasarkan kombinasi gaya, occasion, budget, dan preferensi warna yang kamu isi.";
+
+    const looks = buildLooks({gender,body,style,occasion,budget,color});
+    looks.forEach(l=>{
+      const card=document.createElement("div");
+      card.className="result-card";
+      card.innerHTML=`
+        <h4>${l.title}</h4>
+        <div class="result-tag">${l.tag}</div>
+        <p>${l.description}</p>
+        <ul>${l.items.map(i=>`<li>${i}</li>`).join("")}</ul>
+        <div class="result-small">${l.priceNote}</div>
+        <div class="result-small" style="margin-top:.25rem;">${l.highlight}</div>
+      `;
+      recGrid.appendChild(card);
+    });
+  }
+
+  function buildLooks(p){
+    const budgetMap={
+      "100":{label:"≤ Rp100K", avg:90000},
+      "200":{label:"Rp100K–Rp200K", avg:170000},
+      "300":{label:"Rp200K–Rp300K", avg:250000},
+      "400":{label:"≥ Rp300K", avg:320000}
+    };
+    const bInfo=budgetMap[p.budget] || {label:"-",avg:0};
+    const colorText=p.color?`Preferensi warna: ${p.color}. `:"";
+
+    const bodyNote = p.body==="curvy"
+      ? "Untuk bentuk tubuh berisi/curvy, AI akan cenderung memilih potongan yang tidak terlalu ketat di area pinggang & pinggul."
+      : p.body==="slim"
+        ? "Untuk tubuh cenderung kurus, AI biasanya menambahkan layering agar proporsi terlihat lebih seimbang."
+        : "Jika bentuk tubuh diabaikan, AI membuat rekomendasi yang cukup aman untuk rata-rata pengguna.";
+
+    const looks=[];
+
+    // LOOK 1
+    let title1="Look Utama (Paling Mendekati Preferensi)";
+    let tag1="Personalized";
+    let desc1="";
+    let items1=[];
+    if(p.style==="korean" && p.occasion==="kuliah"){
+      title1="Korean Campus Look";
+      tag1="Korean Casual · Kuliah";
+      desc1="Look ini dirancang untuk suasana kuliah santai, tetap rapi tapi nggak kaku, dengan siluet oversize yang khas Korean.";
+      items1=[
+        "Oversize Shirt Linen Cream – UMKM Sora Wear (± Rp120K)",
+        "Straight Jeans Soft Blue – UMKM Denim Days (± Rp150K)",
+        "Tote Bag Kanvas Minimal – UMKM Lokal Goods (± Rp55K)"
+      ];
+    }else if(p.style==="streetwear"){
+      title1="Streetwear Daily Fit";
+      tag1="Streetwear · Harian / Konser";
+      desc1="Look streetwear dengan graphic tee dan celana longgar, cocok untuk konser, nongkrong, atau konten OOTD.";
+      items1=[
+        "Kaos Graphic Lokal – UMKM Urban Print (± Rp90K)",
+        "Cargo Pants / Jogger – UMKM Jalanan Supply (± Rp150K)",
+        "Sneakers Lokal Basic – UMKM Step Lokal (± Rp180K)"
+      ];
+    }else if(p.style==="minimalist"){
+      title1="Clean Minimalist Set";
+      tag1="Minimalist · Multi-Occasion";
+      desc1="Look minimalis dengan warna netral dan potongan sederhana, aman untuk kuliah, meeting santai, dan main ke kafe.";
+      items1=[
+        "Kemeja Polos Netral – UMKM Basicly (± Rp110K)",
+        "Celana Lurus Hitam/Cream – UMKM Line Studio (± Rp140K)",
+        "Tote Bag Tanpa Grafis – UMKM Lokal Goods (± Rp55K)"
+      ];
+    }else if(p.style==="hijab"){
+      title1="Hijab Modern Daily Look";
+      tag1="Hijab Modern · Daily";
+      desc1="Look hijab modern yang nyaman dipakai seharian, dengan layering ringan dan warna yang lembut.";
+      items1=[
+        "Hijab Voal Earth Tone – UMKM Hijab Lokal (± Rp70K)",
+        "Tunic / Long Shirt – UMKM Modest Wear (± Rp140K)",
+        "Loose / Wide Pants – UMKM Flowy Fit (± Rp130K)"
+      ];
+    }else{
+      desc1="AI menyusun kombinasi atasan, bawahan, dan aksesori yang aman dan fleksibel untuk berbagai kesempatan.";
+      items1=[
+        "Atasan dari UMKM sesuai gaya pilihan",
+        "Bawahan jeans atau celana bahan netral",
+        "Tas sederhana yang mudah dipadukan"
+      ];
+    }
+    const est1 = Math.round(bInfo.avg||250000);
+    looks.push({
+      title:title1,
+      tag:tag1,
+      description:desc1,
+      items:items1,
+      priceNote:`Perkiraan total outfit: sekitar Rp${est1.toLocaleString("id-ID")} (${bInfo.label}).`,
+      highlight:colorText + bodyNote
+    });
+
+    // LOOK 2 - Budget
+    let title2="Look Versi Budget-Friendly";
+    let tag2="Alternatif Hemat";
+    let desc2="Set alternatif ketika kamu ingin menekan biaya tapi tetap membawa vibe gaya yang sama.";
+    let items2=[
+      "Satu item kunci dari UMKM (kaos/hijab/tote bag) sebagai fokus utama.",
+      "Bawahan yang sudah kamu miliki (jeans lama / rok basic).",
+      "Aksesori kecil murah meriah sebagai pemanis."
+    ];
+    let est2 = p.budget==="100" ? 80000 : Math.round((bInfo.avg||150000)*0.6);
+    if(p.budget==="100"){
+      desc2="Karena budget ≤100K, AI menyarankan fokus pada satu produk UMKM saja, lalu memanfaatkan pakaian yang sudah ada di lemari.";
+    }
+    looks.push({
+      title:title2,
+      tag:tag2,
+      description:desc2,
+      items:items2,
+      priceNote:`Perkiraan belanja ke UMKM: sekitar Rp${est2.toLocaleString("id-ID")} (${bInfo.label}).`,
+      highlight:"Strategi ini cocok untuk mahasiswa yang ingin tetap support UMKM tanpa harus beli satu set penuh."
+    });
+
+    // LOOK 3 - Occasion lain
+    let title3="Look Alternatif untuk Occasion Lain";
+    let tag3="Multi-Occasion";
+    let desc3="Set ini menunjukkan bagaimana item yang sama bisa dipakai di konteks berbeda, misalnya dari kuliah ke hangout.";
+    let items3=[
+      "Outer tambahan (cardigan/jaket) untuk mengubah kesan.",
+      "Sepatu sedikit lebih rapi, tapi tetap nyaman.",
+      "Tas netral yang cocok dipakai di beberapa acara."
+    ];
+    let est3=Math.round((bInfo.avg||200000)*0.9);
+
+    if(p.occasion==="formal"){
+      title3="Formal Upgrade Look";
+      tag3="Acara Formal";
+      desc3="Look ini meng-upgrade gaya harian menjadi lebih formal untuk presentasi, seminar, atau acara resmi kampus.";
+      items3=[
+        "Kemeja/Blouse Polos – UMKM Basicly (± Rp110K)",
+        "Celana Bahan / Rok Formal – UMKM Line Studio (± Rp160K)",
+        "Sepatu Tertutup Lebih Rapi – UMKM Step Lokal (± Rp190K)"
+      ];
+      est3=Math.round((bInfo.avg||280000)*1.1);
+    }
+
+    looks.push({
+      title:title3,
+      tag:tag3,
+      description:desc3,
+      items:items3,
+      priceNote:`Perkiraan total outfit: sekitar Rp${est3.toLocaleString("id-ID")} (${bInfo.label}).`,
+      highlight:"Tujuannya supaya produk UMKM yang kamu beli tetap kepakai berkali-kali, bukan hanya sekali pakai."
+    });
+
+    return looks;
+  }
+
+  function saveProfile(){
+    const data={
+      gender:getSelectedValue("gender-options"),
+      body:getSelectedValue("body-options"),
+      style:getSelectedValue("style-options"),
+      occasion:getSelectedValue("occasion-options"),
+      budget:getSelectedValue("budget-options"),
+      color:document.getElementById("color-input").value.trim()
+    };
+    localStorage.setItem("umkm_ai_style_profile",JSON.stringify(data));
+    renderSavedProfile();
+    alert("Profil style disimpan (demo). Hal ini mencontohkan bagaimana sistem mengingat preferensi pengguna.");
+  }
+
+  function renderSavedProfile(){
+    const box=document.getElementById("saved-profile");
+    if(!box) return;
+    const raw=localStorage.getItem("umkm_ai_style_profile");
+    if(!raw){ box.style.display="none"; return; }
+    const d=JSON.parse(raw);
+    box.style.display="block";
+    box.innerHTML=`
+      <strong>Profil Style Tersimpan (Demo)</strong>
+      <div style="margin-top:.3rem;">
+        <span class="pill">Gender: ${d.gender||"-"}</span>
+        <span class="pill">Body: ${d.body||"-"}</span>
+        <span class="pill">Style: ${d.style||"-"}</span>
+        <span class="pill">Occasion: ${d.occasion||"-"}</span>
+        <span class="pill">Budget: ${d.budget||"-"}</span>
+        ${d.color?`<span class="pill">Warna: ${d.color}</span>`:""}
+      </div>
+      <div style="margin-top:.4rem;">
+        Di versi nyata, profil ini bisa dipakai untuk personalisasi berulang: homepage, rekomendasi awal,
+        dan kampanye promo yang spesifik ke preferensimu.
+      </div>
+    `;
+  }
+
+  /* ========== AI CHATBOT LOGIC ========== */
+  let currentMode = "user"; // 'user' atau 'umkm'
+
+  function setMode(mode){
+    currentMode = mode;
+    const btnUser=document.getElementById("mode-user");
+    const btnUmkm=document.getElementById("mode-umkm");
+    if(btnUser && btnUmkm){
+      btnUser.classList.toggle("active", mode==="user");
+      btnUmkm.classList.toggle("active", mode==="umkm");
+    }
+    const label=document.getElementById("mode-label");
+    if(label){
+      label.textContent = mode==="user" ? "Mode: Pengguna (Fashion)" : "Mode: UMKM (Bisnis)";
+    }
+    appendMessage("Mode diubah ke "+(mode==="user"?"Pengguna (Fashion)":"UMKM (Bisnis)."),"bot");
+  }
+
+  function appendMessage(text, sender){
+    const wrap=document.getElementById("chat-messages");
+    if(!wrap) return;
+    const b=document.createElement("div");
+    b.className="chat-bubble "+sender;
+    b.innerHTML=text;
+    wrap.appendChild(b);
+    wrap.scrollTop=wrap.scrollHeight;
+  }
+
+  function handleChatSend(){
+    const input=document.getElementById("chat-input");
+    if(!input) return;
+    const text=input.value.trim();
+    if(!text) return;
+    appendMessage(text,"user");
+    input.value="";
+    setTimeout(()=>{
+      const reply = currentMode==="user"
+        ? buildUserReply(text.toLowerCase())
+        : buildUmkmReply(text.toLowerCase());
+      appendMessage(reply,"bot");
+    },300);
+  }
+
+  function fillAndSend(text){
+    const input=document.getElementById("chat-input");
+    if(!input) return;
+    input.value=text;
+    handleChatSend();
+  }
+
+  function buildUserReply(msg){
+    const hasKorean = msg.includes("korean");
+    const hasKuliah = msg.includes("kuliah");
+    const hasHijab = msg.includes("hijab");
+    const hasStreetwear = msg.includes("streetwear") || msg.includes("konser");
+    const hasBudget100 = msg.includes("100");
+    const hasBudget200 = msg.includes("200");
+    const hasBudget250 = msg.includes("250");
+    const hasBudget300 = msg.includes("300");
+    const isCowok = msg.includes("cowok") || msg.includes("laki");
+    const isCewek = msg.includes("cewek") || msg.includes("perempuan");
+
+    if(hasKorean && hasKuliah){
+      let budgetLine = "Kalau soal budget, kamu belum sebut angka, jadi aku pakai asumsi 150–200K ya. ";
+      if(hasBudget100) budgetLine = "Dengan budget sekitar 100K, kita fokus 1–2 item kunci dari UMKM. ";
+      if(hasBudget200) budgetLine = "Dengan budget sekitar 200K, kita bisa ambil 2–3 item dari UMKM. ";
+      const genderLine = isCowok
+        ? "Untuk cowok, siluet oversize di bagian atasan + jeans lurus masih aman dan maskulin."
+        : isCewek
+          ? "Untuk cewek, kamu bisa main di warna pastel atau earth tone supaya look kuliah tetap lembut dan rapi."
+          : "Kalau gender diabaikan, kombinasi ini tetap unisex dan aman dipakai siapa saja.";
+      return (
+        budgetLine +
+        "Untuk Korean look ke kampus, kombinasi basic dari katalog UMKM yang bisa kamu coba adalah:<br>" +
+        "- Oversize Shirt Linen Cream – <em>UMKM Sora Wear</em><br>" +
+        "- Straight Jeans Soft Blue – <em>UMKM Denim Days</em><br>" +
+        "- Tote Bag Kanvas Minimal – <em>UMKM Lokal Goods</em><br><br>" +
+        genderLine +
+        "<br><br>Kalau mau, aku juga bisa bantu turunkan versi hemat (misalnya hanya beli kaos/hijab dulu, sisanya pakai yang sudah ada di lemari)."
+      );
+    }
+
+    if(hasHijab && msg.includes("ngedate")){
+      const budgetLine = hasBudget250
+        ? "Dengan budget sekitar 250K, kita bisa ambil 3 item dari UMKM tanpa terlalu mepet."
+        : "Kalau budget belum jelas, aku pakai kisaran 200–250K sebagai acuan.";
+      return (
+        budgetLine +
+        "<br><br>Untuk look hijab simple tapi manis buat ngedate, kamu bisa pakai:<br>" +
+        "- Hijab voal earth tone (misalnya coklat susu) – <em>UMKM Hijab Lokal</em><br>" +
+        "- Dress / tunic polos dengan potongan lurus – <em>UMKM Modest Wear</em><br>" +
+        "- Tas kecil / sling bag netral – <em>UMKM Lokal Goods</em><br><br>" +
+        "Kuncinya: pilih warna yang nggak terlalu ramai, tapi tambahkan sedikit aksesoris (jam tangan / cincin) supaya tetap terasa spesial."
+      );
+    }
+
+    if(hasStreetwear){
+      const budgetLine = hasBudget300
+        ? "Dengan budget 250–300K, kamu bisa ambil full set dari UMKM: kaos, celana, dan mungkin topi/snapback."
+        : "Kalau budget di bawah 200K, fokus dulu ke kaos graphic yang kuat, lalu kombinasikan dengan celana yang sudah kamu punya.";
+      return (
+        "Untuk konser dengan vibe streetwear, kamu bisa coba kombinasi ini:<br>" +
+        "- Kaos graphic lokal (tema band / artwork unik) – <em>UMKM Urban Print</em><br>" +
+        "- Cargo pants / jogger sedikit longgar – <em>UMKM Jalanan Supply</em><br>" +
+        "- Sneakers lokal basic – <em>UMKM Step Lokal</em><br><br>" +
+        budgetLine +
+        " Jangan lupa pilih warna yang masih nyambung dengan jaket atau outer yang kamu punya, supaya gampang di-mix."
+      );
+    }
+
+    return (
+      "Dari pertanyaanmu, aku membaca gaya + occasion + (jika ada) budget. " +
+      "Kemudian aku mencocokkan dengan katalog UMKM yang punya label gaya, warna, dan harga.<br><br>" +
+      "Coba sebut lebih detail, misalnya:<br>" +
+      "- “Aku mau gaya minimalist buat presentasi kelas, budget 150K.”<br>" +
+      "- “Aku suka earth tone, mau ke kafe, cewek berhijab, budget 200K.”"
+    );
+  }
+
+  function buildUmkmReply(msg){
+    if(msg.includes("fokus") && msg.includes("produk")){
+      return (
+        "Jika targetmu adalah Gen Z, data dari modul AI biasanya menunjukkan bahwa:<br><br>" +
+        "1️⃣ Gaya yang sering dicari: Korean casual, streetwear, dan minimalist.<br>" +
+        "2️⃣ Range harga nyaman: Rp100K–Rp200K per item (untuk atasan/bawahan), di bawah Rp100K untuk aksesori/tas kecil.<br>" +
+        "3️⃣ Warna: earth tone (cream, coklat susu), pastel lembut, serta kombinasi monochrome untuk minimalist.<br><br>" +
+        "Jadi, kamu bisa fokus ke:<br>" +
+        "- Oversize shirt / kaos graphic untuk Korean & streetwear.<br>" +
+        "- Kemeja polos dan celana lurus untuk minimalist.<br>" +
+        "- Hijab dan tas dengan warna earth tone.<br><br>" +
+        "AI di platform ini akan mendorong produkmu ke pengguna yang preferensinya cocok, sehingga peluang klik dan pembelian meningkat."
+      );
+    }
+
+    if(msg.includes("penjualan") || msg.includes("meningkatkan")){
+      return (
+        "AI bisa membantu meningkatkan penjualan UMKM di beberapa titik:<br><br>" +
+        "1️⃣ <strong>Rekomendasi yang tepat sasaran</strong><br>" +
+        "Produkmu tidak muncul ke semua orang secara acak, tetapi hanya ke pengguna yang gayanya cocok " +
+        "(misalnya suka Korean casual dengan budget 150–200K).<br><br>" +
+        "2️⃣ <strong>Cross-sell & mix-and-match otomatis</strong><br>" +
+        "Jika pengguna memilih satu produk darimu, AI bisa menyarankan produk pelengkap dari UMKM lain atau dari tokomu sendiri, " +
+        "sehingga 1 pengguna berpotensi membeli lebih dari 1 item.<br><br>" +
+        "3️⃣ <strong>Insight data yang mudah dimengerti</strong><br>" +
+        "Kamu bisa bertanya ke chatbot: produk mana yang paling sering diklik, gaya apa yang naik, dan range harga mana yang paling laku. " +
+        "Itu semua bisa jadi dasar untuk menentukan stok, desain baru, atau promo khusus."
+      );
+    }
+
+    if(msg.includes("ai") && msg.includes("platform")){
+      return (
+        "Di platform ini, AI bekerja di belakang layar sebagai:<br><br>" +
+        "- <strong>Pencocok preferensi</strong> → membaca gaya, budget, warna, lalu mencari produk UMKM yang cocok.<br>" +
+        "- <strong>Pengelompokan produk</strong> → memberi label otomatis ke produk (Korean, streetwear, hijab, dsb.).<br>" +
+        "- <strong>Analisis tren</strong> → melihat gaya dan harga mana yang paling sering dipilih pengguna.<br><br>" +
+        "Chatbot yang sedang kamu gunakan hanyalah 'wajah depan' dari AI tersebut, yang menjelaskan data dan rekomendasi dengan bahasa yang mudah."
+      );
+    }
+
+    return (
+      "Sebagai UMKM, kamu bisa gunakan chatbot ini untuk bertanya hal-hal seperti:<br>" +
+      "- “Produk fashion apa yang cocok untuk Gen Z di platform ini?”<br>" +
+      "- “Range harga berapa yang paling diminati?”<br>" +
+      "- “Bagaimana contoh strategi memanfaatkan AI rekomendasi untuk katalog saya?”<br><br>" +
+      "Coba kirim lagi pertanyaanmu dengan lebih spesifik, ya. 😊"
+    );
+  }
+
+  const chatInput = document.getElementById("chat-input");
+  if (chatInput) {
+    chatInput.addEventListener("keydown", function(e){
+      if(e.key==="Enter"){
+        e.preventDefault();
+        handleChatSend();
+      }
+    });
+  }
+
+  /* ========== KATALOG LOGIC ========== */
+  const products = [
+    {
+      name:"Oversize Shirt Linen Cream",
+      umkm:"Sora Wear",
+      price:120000,
+      style:"Korean Casual",
+      occasion:["Kuliah","Hangout"],
+      tags:["Korean Casual","Kuliah","Earth Tone","Best Seller"]
+    },
+    {
+      name:"Straight Jeans Soft Blue",
+      umkm:"Denim Days",
+      price:150000,
+      style:"Minimalist",
+      occasion:["Kuliah","Hangout"],
+      tags:["Casual","Unisex","Gen Z Favorite"]
+    },
+    {
+      name:"Basic Hijab Voal Earth Tone",
+      umkm:"Hijab Lokal",
+      price:70000,
+      style:"Hijab Modern",
+      occasion:["Daily","Kuliah"],
+      tags:["Hijab Modern","Earth Tone"]
+    },
+    {
+      name:"Tote Bag Kanvas Minimal",
+      umkm:"Lokal Goods",
+      price:55000,
+      style:"Minimalist",
+      occasion:["Kuliah","Hangout","Daily"],
+      tags:["Minimalist","Student Friendly"]
+    },
+    {
+      name:"Graphic Tee Konser",
+      umkm:"Urban Print",
+      price:90000,
+      style:"Streetwear",
+      occasion:["Konser","Hangout"],
+      tags:["Streetwear","Konser","Limited Drop"]
+    },
+    {
+      name:"Cargo Pants Army",
+      umkm:"Jalanan Supply",
+      price:160000,
+      style:"Streetwear",
+      occasion:["Konser","Hangout"],
+      tags:["Streetwear","Oversize Friendly"]
+    },
+    {
+      name:"Blouse Pastel Puff Sleeve",
+      umkm:"Basicly",
+      price:130000,
+      style:"Korean Casual",
+      occasion:["Hangout","Ngedate"],
+      tags:["Pastel","Cute Look"]
+    },
+    {
+      name:"Celana Bahan Hitam Lurus",
+      umkm:"Line Studio",
+      price:140000,
+      style:"Minimalist",
+      occasion:["Formal","Kuliah"],
+      tags:["Formal","Minimalist"]
+    }
+  ];
+
+  function renderProducts(list){
+    const grid=document.getElementById("product-grid");
+    if(!grid) return;
+    grid.innerHTML="";
+    list.forEach(p=>{
+      const div=document.createElement("div");
+      div.className="product-card";
+      div.innerHTML=`
+        <div class="product-name">${p.name}</div>
+        <div class="product-umkm">UMKM: ${p.umkm}</div>
+        <div class="product-price">Rp${p.price.toLocaleString("id-ID")}</div>
+        <div class="product-tags">
+          <span class="tag">${p.style}</span>
+          ${p.occasion.map(o=>`<span class="tag">${o}</span>`).join("")}
+          ${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+        </div>
+        <div class="product-footer">
+          <button class="btn-secondary" onclick="alert('Konsep: diarahkan ke WhatsApp/Instagram UMKM ${p.umkm}')">
+            Hubungi Penjual
+          </button>
+          <span style="font-size:.75rem;color:#7a6b60;">
+            Dibaca AI sebagai produk ${p.style}, cocok untuk ${p.occasion.join(", ")}.
+          </span>
+        </div>
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  function filterProducts(){
+    const styleEl = document.getElementById("filter-style");
+    const occasionEl = document.getElementById("filter-occasion");
+    const priceEl = document.getElementById("filter-price");
+    const searchEl = document.getElementById("search-input");
+    if(!styleEl || !occasionEl || !priceEl || !searchEl) return;
+
+    const style = styleEl.value;
+    const occasion = occasionEl.value;
+    const price = priceEl.value;
+    const search = searchEl.value.toLowerCase();
+
+    const filtered = products.filter(p=>{
+      if(style && p.style!==style) return false;
+      if(occasion && !p.occasion.includes(occasion)) return false;
+      if(price==="low" && p.price>100000) return false;
+      if(price==="mid" && (p.price<100000 || p.price>200000)) return false;
+      if(price==="high" && p.price<200000) return false;
+      const text = (p.name+" "+p.umkm+" "+p.tags.join(" ")).toLowerCase();
+      if(search && !text.includes(search)) return false;
+      return true;
+    });
+
+    renderProducts(filtered);
+  }
+
+  /* ========== INIT ON LOAD ========== */
+  renderSavedProfile();
+  renderProducts(products);
+</script>
+</body>
+</html>
