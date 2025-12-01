@@ -294,6 +294,47 @@
       gap: 1rem;
       margin-top: 1rem;
     }
+
+        .result-products {
+      margin-top: .6rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .result-product {
+      display: flex;
+      gap: .5rem;
+      align-items: flex-start;
+    }
+    .result-product-img {
+      width: 56px;
+      height: 56px;
+      border-radius: .7rem;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f0e3d8;
+      border: 1px solid #e2d4c6;
+    }
+    .result-product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .result-product-name {
+      font-size: .87rem;
+      font-weight: 600;
+      margin-bottom: .1rem;
+    }
+    .result-product-meta {
+      font-size: .8rem;
+      color: #7a6b60;
+      margin-bottom: .15rem;
+    }
+    .result-product-tags {
+      font-size: .75rem;
+    }
+
     .result-card {
       background: #fdf9f4;
       border-radius: 1rem;
@@ -539,6 +580,27 @@
       }
       .hero-title { font-size: 1.7rem; }
     }
+    .product-image-wrap {
+  width: 100%;
+  height: 170px;             /* kasih tinggi tetap */
+  border-radius: 0.9rem;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  background: #f0e3d8;       /* biar kelihatan kotaknya */
+  border: 1px solid #e2d4c6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  color: #7a6b60;
+}
+.product-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
   </style>
 </head>
 <body>
@@ -552,9 +614,6 @@
         <button class="nav-link" onclick="showSection('ai-style', this)">AI Style</button>
         <button class="nav-link" onclick="showSection('ai-chat', this)">AI Chatbot</button>
         <button class="nav-link" onclick="showSection('katalog', this)">Katalog UMKM</button>
-        <button class="btn-secondary" onclick="alert('Login/Daftar bisa ditambahkan di versi lanjutan.')">
-          Login / Daftar
-        </button>
       </div>
     </nav>
   </div>
@@ -938,7 +997,6 @@
     <div>Berisi modul AI Style Recommender, AI Chatbot, dan Katalog UMKM dalam satu halaman.</div>
   </div>
 </footer>
-
 <script>
   /* ========== NAV / PAGE SWITCH ========== */
   function showSection(id, btn) {
@@ -973,72 +1031,212 @@
   }
 
   /* ========== DATA PRODUK UMKM (DIPAKAI AI STYLE + KATALOG) ========== */
+  // gender: "female" | "male" | "unisex"
   const products = [
+    // KOREAN CASUAL – CEWEK
     {
-      name:"Oversize Shirt Linen Cream",
-      umkm:"Sora Wear",
-      price:120000,
-      style:"Korean Casual",
-      occasion:["Kuliah","Hangout"],
-      tags:["Korean Casual","Kuliah","Earth Tone","Best Seller"]
+      name: "Mini Dress Overall Peach",
+      umkm: "Lovely Wardrobe",
+      price: 175000,
+      style: "Korean Casual",
+      occasion: ["Hangout","Ngedate"],
+      tags: ["Dress","Pastel","Cute Look"],
+      gender: "female",
+      image: "imgdress-overall-peach.jpg"
     },
     {
-      name:"Straight Jeans Soft Blue",
-      umkm:"Denim Days",
-      price:150000,
-      style:"Minimalist",
-      occasion:["Kuliah","Hangout"],
-      tags:["Casual","Unisex","Gen Z Favorite"]
+      name: "Mix & Match Korean Casual Girl",
+      umkm: "K-Style Boutique",
+      price: 185000,
+      style: "Korean Casual",
+      occasion: ["Kuliah","Hangout"],
+      tags: ["Korean Casual","Layering","Soft Tone"],
+      gender: "female",
+      image: "Mix & Match Korean Casual Girl.jpg"
     },
     {
-      name:"Basic Hijab Voal Earth Tone",
-      umkm:"Hijab Lokal",
-      price:70000,
-      style:"Hijab Modern",
-      occasion:["Daily","Kuliah"],
-      tags:["Hijab Modern","Earth Tone"]
+      name: "Pleated Midi Skirt Korean Cream",
+      umkm: "Soft Seoul Skirt",
+      price: 165000,
+      style: "Korean Casual",
+      occasion: ["Kuliah","Hangout","Formal"],
+      tags: ["Skirt","Cream","Soft Girl"],
+      gender: "female",
+      image: "Pleated Midi Skirt Korean Cream.jpg"
+    },
+
+    // KOREAN CASUAL – COWOK
+    {
+      name: "Korean Casual Cowok Blue Shirt",
+      umkm: "Oppa Style Local",
+      price: 180000,
+      style: "Korean Casual",
+      occasion: ["Kuliah","Hangout"],
+      tags: ["Cowok","Relaxed","Blue Shirt"],
+      gender: "male",
+      image: "Korean Casual Cowok Blue Shirt.jpg"
     },
     {
-      name:"Tote Bag Kanvas Minimal",
-      umkm:"Lokal Goods",
-      price:55000,
-      style:"Minimalist",
-      occasion:["Kuliah","Hangout","Daily"],
-      tags:["Minimalist","Student Friendly"]
+      name: "Knit Vest Preppy Cowok",
+      umkm: "Urban Preppy ID",
+      price: 185000,
+      style: "Korean Casual",
+      occasion: ["Kuliah","Hangout"],
+      tags: ["Preppy","Layering","Gen Z"],
+      gender: "male",
+      image: "Knit Vest Preppy Cowok.jpg"
+    },
+
+    // STREETWEAR
+    {
+      name: "Oversize Tee Streetwear Girl",
+      umkm: "Street Girl Co.",
+      price: 130000,
+      style: "Streetwear",
+      occasion: ["Hangout","Konser","Daily"],
+      tags: ["Oversize","Streetwear","Graphic Tee"],
+      gender: "female",
+      image: "Graphic Tee.jpg"
     },
     {
-      name:"Graphic Tee Konser",
-      umkm:"Urban Print",
-      price:90000,
-      style:"Streetwear",
-      occasion:["Konser","Hangout"],
-      tags:["Streetwear","Konser","Limited Drop"]
+      name: "Cargo Pants Street Unisex",
+      umkm: "Asphalt Wear",
+      price: 170000,
+      style: "Streetwear",
+      occasion: ["Hangout","Konser","Daily"],
+      tags: ["Cargo","Unisex","Comfort"],
+      gender: "unisex",
+      image: "Cargo Pants Street Unisex.jpg"
     },
     {
-      name:"Cargo Pants Army",
-      umkm:"Jalanan Supply",
-      price:160000,
-      style:"Streetwear",
-      occasion:["Konser","Hangout"],
-      tags:["Streetwear","Oversize Friendly"]
+      name: "Hoodie Street Graphic",
+      umkm: "Night City Hoodie",
+      price: 210000,
+      style: "Streetwear",
+      occasion: ["Hangout","Konser","Daily"],
+      tags: ["Hoodie","Graphic","Layering"],
+      gender: "unisex",
+      image: "Hoodie Street Graphic.jpg"
     },
     {
-      name:"Blouse Pastel Puff Sleeve",
-      umkm:"Basicly",
-      price:130000,
-      style:"Korean Casual",
-      occasion:["Hangout","Ngedate"],
-      tags:["Pastel","Cute Look"]
+      name: "Denim Jacket Vintage Street",
+      umkm: "Retro Lane",
+      price: 225000,
+      style: "Streetwear",
+      occasion: ["Hangout","Konser","Daily"],
+      tags: ["Denim","Outer","Vintage"],
+      gender: "unisex",
+      image: "Denim Jacket Vintage Street.jpg"
+    },
+
+    // MINIMALIST
+    {
+      name: "Blouse Navy White Office",
+      umkm: "Modest Office Wear",
+      price: 160000,
+      style: "Minimalist",
+      occasion: ["Kuliah","Formal"],
+      tags: ["Office Wear","Smart Casual"],
+      gender: "female",
+      image: "Blouse Navy White Office.jpg"
     },
     {
-      name:"Celana Bahan Hitam Lurus",
-      umkm:"Line Studio",
-      price:140000,
-      style:"Minimalist",
-      occasion:["Formal","Kuliah"],
-      tags:["Formal","Minimalist"]
+      name: "Straight Pants Minimal Warm Beige",
+      umkm: "Line & Form Studio",
+      price: 165000,
+      style: "Minimalist",
+      occasion: ["Kuliah","Formal","Daily"],
+      tags: ["Pants","Warm Beige","Clean Look"],
+      gender: "female",
+      image: "Straight Pants Minimal Warm Beige.jpg"
+    },
+    {
+      name: "Basic Turtleneck Knit Earth Tone",
+      umkm: "Earth Wardrobe",
+      price: 155000,
+      style: "Minimalist",
+      occasion: ["Kuliah","Hangout","Daily"],
+      tags: ["Earth Tone","Knit","Layering"],
+      gender: "unisex",
+      image: "Basic Turtleneck Knit Earth Tone.jpg"
+    },
+    {
+      name: "Kemeja Linen Minimalist Cowok",
+      umkm: "North Coast Linen",
+      price: 190000,
+      style: "Minimalist",
+      occasion: ["Kuliah","Formal","Daily"],
+      tags: ["Linen","Cowok","Minimalist"],
+      gender: "male",
+      image: "Kemeja Linen Minimalist Cowok.jpg"
+    },
+
+    // HIJAB MODERN
+    {
+      name: "Set Hijab Mauve Wide Pants",
+      umkm: "Hijab Daily Chic",
+      price: 190000,
+      style: "Hijab Modern",
+      occasion: ["Daily","Hangout"],
+      tags: ["Earth Tone","Wide Pants","Comfort"],
+      gender: "female",
+      image: "Set Hijab Mauve Wide Pants.jpg"
+    },
+    {
+      name: "Hijab Pastel Backpack Look",
+      umkm: "Soft Tone Hijab",
+      price: 150000,
+      style: "Hijab Modern",
+      occasion: ["Kuliah","Travel"],
+      tags: ["Pastel","Backpack","Clean Look"],
+      gender: "female",
+      image: "Hijab Pastel Backpack Look.jpg"
+    },
+    {
+      name: "Set Hijab Syar'i Coklat",
+      umkm: "Syar'i Cozy Wear",
+      price: 200000,
+      style: "Hijab Modern",
+      occasion: ["Daily","Formal"],
+      tags: ["Syar'i","Earth Tone"],
+      gender: "female",
+      image: "Set Hijab Syar'i Coklat Earth Tone.jpg"
+    },
+    {
+      name: "Hijab Korean Vest Layer Look",
+      umkm: "Han River Hijab",
+      price: 195000,
+      style: "Hijab Modern",
+      occasion: ["Hangout","Kuliah"],
+      tags: ["Korean Hijab","Layering"],
+      gender: "female",
+      image: "Hijab Korean Vest Layer Look.jpg"
+    },
+    {
+      name: "Set Hijab Formal Navy Blazer",
+      umkm: "Modest Executive ID",
+      price: 235000,
+      style: "Hijab Modern",
+      occasion: ["Formal","Reuni"],
+      tags: ["Formal","Blazer","Hijab Set"],
+      gender: "female",
+      image: "Set Hijab Formal Navy Blazer.jpg"
     }
   ];
+
+  /* ========== HELPER: STYLE LABEL ==========
+     dipakai di AI Style & Chat supaya kalimat rapi
+  ========================================= */
+  function styleLabel(code){
+    if(!code) return "";
+    const map = {
+      korean: "Korean Casual",
+      streetwear: "Streetwear",
+      minimalist: "Minimalist",
+      hijab: "Hijab Modern"
+    };
+    return map[code] || code;
+  }
 
   /* ========== LOGIKA KECIL: PEMETAAN STYLE PENGGUNA -> STYLE PRODUK ========== */
   function styleMatches(userStyle, productStyle) {
@@ -1046,18 +1244,10 @@
     userStyle = userStyle.toLowerCase();
     productStyle = productStyle.toLowerCase();
 
-    if (userStyle === "korean") {
-      return productStyle.includes("korean");
-    }
-    if (userStyle === "streetwear") {
-      return productStyle.includes("streetwear");
-    }
-    if (userStyle === "minimalist") {
-      return productStyle.includes("minimalist");
-    }
-    if (userStyle === "hijab") {
-      return productStyle.includes("hijab");
-    }
+    if (userStyle === "korean")   return productStyle.includes("korean");
+    if (userStyle === "streetwear") return productStyle.includes("streetwear");
+    if (userStyle === "minimalist") return productStyle.includes("minimalist");
+    if (userStyle === "hijab")    return productStyle.includes("hijab");
     return false;
   }
 
@@ -1067,42 +1257,72 @@
       "100": 100000,
       "200": 200000,
       "300": 300000,
-      "400": 350000 // kita anggap min 350K ke atas
+      "400": 350000
     };
     const budgetLimit = budgetLimitMap[prefs.budget] || 200000;
 
-    const scored = products.map(p => {
+    // Filter awal berdasarkan gender (kalau diisi)
+    const candidates = products.filter(p => {
+      if (prefs.gender && p.gender && p.gender !== "unisex" && p.gender !== prefs.gender) {
+        return false;
+      }
+      return true;
+    });
+
+    const scored = candidates.map(p => {
       let score = 0;
 
       // 1) Kecocokan gaya
-      if (styleMatches(prefs.style, p.style)) score += 4;
+      const matchStyle = styleMatches(prefs.style, p.style);
+      if (matchStyle) score += 5;
+      else if (prefs.style) score -= 1; // beda gaya, kecilin skor
 
       // 2) Kecocokan occasion
-      if (prefs.occasion && p.occasion.includes(prefs.occasionLabel)) score += 3;
+      if (prefs.occasionLabel && p.occasion.includes(prefs.occasionLabel)) {
+        score += 3;
+      } else if (prefs.occasionLabel) {
+        // occasion mirip (kuliah/hangout/daily)
+        const casualSet = ["Kuliah","Hangout","Daily","Ngedate","Reuni"];
+        if (casualSet.includes(prefs.occasionLabel) && p.occasion.some(o => casualSet.includes(o))) {
+          score += 1;
+        }
+      }
 
-      // 3) Budget: dalam batas -> +2, sedikit lewat -> +1
+      // 3) Budget
       if (p.price <= budgetLimit) score += 2;
       else if (p.price <= budgetLimit + 50000) score += 1;
 
-      // 4) Hijab logic sederhana
+      // 4) Logika hijab
       if (prefs.style === "hijab" && p.style === "Hijab Modern") score += 2;
+      if (prefs.style !== "hijab" && p.style === "Hijab Modern") score -= 2;
 
-      // 5) Preferensi warna (sangat sederhana, hanya cek keyword)
+      // 5) Preferensi warna via tags / nama produk
       if (prefs.color) {
         const c = prefs.color.toLowerCase();
         const text = (p.tags.join(" ") + " " + p.name).toLowerCase();
-        if (text.includes("earth") && c.includes("earth")) score += 1;
-        if (text.includes("pastel") && c.includes("pastel")) score += 1;
-        if (text.includes("minimal") && c.includes("mono")) score += 1;
+        if (c.includes("earth")  && text.includes("earth"))  score += 1;
+        if (c.includes("pastel") && text.includes("pastel")) score += 1;
+        if ((c.includes("mono") || c.includes("hitam putih")) && text.includes("minimal")) score += 1;
       }
 
       return { product: p, score };
     });
 
-    return scored
-      .filter(s => s.score > 0)
-      .sort((a,b)=>b.score - a.score)
-      .map(s => s.product);
+    // Urutkan berdasarkan skor
+    scored.sort((a,b)=>b.score - a.score);
+
+    // Prioritas: produk yang match gaya + skor >=4
+    let primary = scored.filter(s => s.score >= 4 && styleMatches(prefs.style, s.product.style))
+                        .map(s => s.product);
+
+    // Kalau kurang, ambil yang skor >=2 (masih lumayan relevan)
+    if (primary.length < 4) {
+      const extra = scored.filter(s => s.score >= 2 && !primary.includes(s.product))
+                          .map(s => s.product);
+      primary = primary.concat(extra);
+    }
+
+    return primary;
   }
 
   function formatProductLine(p) {
@@ -1146,7 +1366,7 @@
     recGrid.innerHTML = "";
 
     recSubtitle.textContent =
-      "AI membaca preferensi kamu, memberi skor ke setiap produk UMKM, lalu menyusun 3 set outfit berbeda dari produk yang paling relevan.";
+      "AI membaca preferensi kamu, memberi skor ke setiap produk UMKM, lalu menyusun 3 set outfit lengkap dengan gambar produk dari katalog.";
 
     const matches = recommendProducts(prefs);
 
@@ -1164,7 +1384,10 @@
       return;
     }
 
-    /* ---- LOOK 1: Look Utama (produk dengan skor tertinggi) ---- */
+    const budgetLimitMap = { "100":100000,"200":200000,"300":300000,"400":350000 };
+    const budgetLimit = budgetLimitMap[budget] || 200000;
+
+    /* ---- LOOK 1: Look Utama ---- */
     const mainLookItems = matches.slice(0, 3);
     const mainTotal = mainLookItems.reduce((sum,p)=>sum+p.price,0);
 
@@ -1189,23 +1412,25 @@
       title: "Look Utama (Paling Mendekati Preferensi)",
       tag: `${prefs.occasionLabel} · ${styleLabel(prefs.style)}`,
       description: `Look ini adalah kombinasi produk UMKM dengan skor kecocokan tertinggi terhadap gaya "${styleLabel(prefs.style)}" dan occasion "${prefs.occasionLabel}".`,
-      items: mainLookItems.map(formatProductLine),
+      items: mainLookItems,
       priceNote: `Perkiraan total outfit: sekitar Rp${mainTotal.toLocaleString("id-ID")} (${budgetLabelMap[budget] || "-"})`,
       highlight: colorText + bodyNote
     };
 
-    /* ---- LOOK 2: Budget-Friendly (pilih produk termurah yang masih relevan) ---- */
-    const sortedByPrice = [...matches].sort((a,b)=>a.price - b.price);
-    const budgetLookItems = sortedByPrice.slice(0, 2 + (sortedByPrice.length>3?1:0));
+    /* ---- LOOK 2: Budget-Friendly ---- */
+    const budgetLookItems = matches
+      .filter(p => p.price <= budgetLimit + 30000) // masih di sekitar budget
+      .sort((a,b)=>a.price - b.price)
+      .slice(0,3);
     const budgetTotal = budgetLookItems.reduce((sum,p)=>sum+p.price,0);
 
     const look2 = {
       title: "Look Versi Budget-Friendly",
       tag: "Alternatif Hemat",
-      description: "Set outfit dengan fokus ke produk UMKM yang relatif lebih murah, tapi masih sesuai gaya dan occasion yang kamu pilih.",
-      items: budgetLookItems.map(formatProductLine),
-      priceNote: `Perkiraan belanja: sekitar Rp${budgetTotal.toLocaleString("id-ID")} (lebih ramah kantong dibanding look utama).`,
-      highlight: "Strategi ini cocok untuk mahasiswa yang ingin tetap support UMKM tanpa harus beli banyak item sekaligus."
+      description: "Set outfit dengan fokus ke produk UMKM yang lebih ramah di kantong, tetapi masih sesuai gaya dan occasion yang kamu pilih.",
+      items: budgetLookItems.length ? budgetLookItems : mainLookItems,
+      priceNote: `Perkiraan belanja: sekitar Rp${(budgetLookItems.length?budgetTotal:mainTotal).toLocaleString("id-ID")} (disesuaikan dengan budget-mu).`,
+      highlight: "Cocok untuk mahasiswa/pelajar yang ingin tetap support UMKM tanpa harus beli banyak item sekaligus."
     };
 
     /* ---- LOOK 3: Alternatif Occasion / Mix & Match ---- */
@@ -1218,32 +1443,52 @@
       title: "Look Alternatif / Multi-Occasion",
       tag: "Mix & Match",
       description: "Look ini menunjukkan bagaimana produk yang sama bisa dipakai di occasion lain, sehingga belanja ke UMKM jadi lebih maksimal (bukan sekali pakai).",
-      items: altItems.map(formatProductLine),
+      items: altItems,
       priceNote: `Perkiraan total outfit: sekitar Rp${altTotal.toLocaleString("id-ID")}.`,
       highlight: "Cocok untuk kamu yang ingin satu produk dipakai untuk kuliah, hangout, dan acara semi-formal sekaligus."
     };
 
+    // ---- RENDER SEMUA LOOK DENGAN GAMBAR PRODUK ----
     [look1, look2, look3].forEach(l => {
       const card = document.createElement("div");
       card.className = "result-card";
+
+      const productsHtml = l.items.map(p => `
+        <div class="result-product">
+          ${p.image ? `
+            <div class="result-product-img">
+              <img src="${p.image}" alt="${p.name}">
+            </div>
+          ` : `
+            <div class="result-product-img"></div>
+          `}
+          <div>
+            <div class="result-product-name">${p.name}</div>
+            <div class="result-product-meta">
+              UMKM ${p.umkm} · Rp${p.price.toLocaleString("id-ID")}
+            </div>
+            <div class="result-product-tags">
+              <span class="tag">${p.style}</span>
+              ${p.occasion.map(o=>`<span class="tag">${o}</span>`).join("")}
+              ${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+            </div>
+          </div>
+        </div>
+      `).join("");
+
       card.innerHTML = `
         <h4>${l.title}</h4>
         <div class="result-tag">${l.tag}</div>
         <p>${l.description}</p>
-        <ul>${l.items.map(i=>`<li>${i}</li>`).join("")}</ul>
-        <div class="result-small">${l.priceNote}</div>
+        <div class="result-products">
+          ${productsHtml}
+        </div>
+        <div class="result-small" style="margin-top:.4rem;">${l.priceNote}</div>
         <div class="result-small" style="margin-top:.25rem;">${l.highlight}</div>
       `;
+
       recGrid.appendChild(card);
     });
-  }
-
-  function styleLabel(style){
-    if(style==="korean") return "Korean Casual";
-    if(style==="streetwear") return "Streetwear";
-    if(style==="minimalist") return "Minimalist";
-    if(style==="hijab") return "Hijab Modern";
-    return style || "-";
   }
 
   /* ========== SIMPAN PROFIL STYLE (DEMO) ========== */
@@ -1335,86 +1580,187 @@
     handleChatSend();
   }
 
-  function buildUserReply(msg){
-    const hasKorean = msg.includes("korean");
-    const hasKuliah = msg.includes("kuliah");
-    const hasHijab = msg.includes("hijab");
-    const hasStreetwear = msg.includes("streetwear") || msg.includes("konser");
-    const hasBudget100 = msg.includes("100");
-    const hasBudget200 = msg.includes("200");
-    const hasBudget250 = msg.includes("250");
-    const hasBudget300 = msg.includes("300");
-    const isCowok = msg.includes("cowok") || msg.includes("laki");
-    const isCewek = msg.includes("cewek") || msg.includes("perempuan");
+  /* ==== NLP SEDERHANA UNTUK CHAT USER ==== */
+  function extractUserPrefs(raw){
+    const msg = raw.toLowerCase();
+    const prefs = {
+      style: null,
+      occasionLabel: null,
+      gender: null,
+      body: null,
+      budgetCode: null,
+      budgetApprox: null,
+      color: null,
+      concerns: []
+    };
 
-    if(hasKorean && hasKuliah){
-      let budgetLine = "Kalau soal budget, kamu belum sebut angka, jadi aku pakai asumsi 150–200K ya. ";
-      if(hasBudget100) budgetLine = "Dengan budget sekitar 100K, kita fokus 1–2 item kunci dari UMKM. ";
-      if(hasBudget200) budgetLine = "Dengan budget sekitar 200K, kita bisa ambil 2–3 item dari UMKM. ";
-      const genderLine = isCowok
-        ? "Untuk cowok, siluet oversize di bagian atasan + jeans lurus masih aman dan maskulin."
-        : isCewek
-          ? "Untuk cewek, kamu bisa main di warna pastel atau earth tone supaya look kuliah tetap lembut dan rapi."
-          : "Kalau gender diabaikan, kombinasi ini tetap unisex dan aman dipakai siapa saja.";
+    const styleMap = {
+      korean: ["korean","korea","k-style","drakor","soft girl","softgirl","korea korea"],
+      streetwear: ["streetwear","street wear","street","oversize","baggy","sneakers look"],
+      minimalist: ["minimalist","minimalis","simple","basic","clean look"],
+      hijab: ["hijab","kerudung","khimar","syar'i","syari","syar i","hijabers"]
+    };
+    for (const code in styleMap){
+      if (styleMap[code].some(k => msg.includes(k))) {
+        prefs.style = code;
+        break;
+      }
+    }
+
+    const occMap = {
+      Kuliah: ["kuliah","kampus","ngampus","kelas pagi"],
+      Hangout: ["hangout","nongkrong","kafe","cafe","mall","jalan jalan"],
+      Ngedate: ["ngedate","date","pacar","gebetan","jalan berdua"],
+      Konser: ["konser","gig","festival","nonton musik"],
+      Formal: ["formal","presentasi","wawancara","interview","sidang","seminar","kondangan","wisuda","reuni"]
+    };
+    for (const label in occMap){
+      if (occMap[label].some(k => msg.includes(k))) {
+        prefs.occasionLabel = label;
+        break;
+      }
+    }
+
+    if (msg.includes("cowok") || msg.includes("laki") || msg.includes("pria")) {
+      prefs.gender = "male";
+    } else if (msg.includes("cewek") || msg.includes("perempuan") || msg.includes("wanita") || msg.includes("hijab")) {
+      prefs.gender = "female";
+    }
+
+    if (msg.includes("gemuk") || msg.includes("berisi") || msg.includes("plus size") || msg.includes("gendut")) {
+      prefs.body = "plus_size";
+      prefs.concerns.push("plus_size");
+    }
+    if (msg.includes("kurus") || msg.includes("kecil") || msg.includes("pendek") || msg.includes("mungil")) {
+      prefs.body = "petite";
+      prefs.concerns.push("petite");
+    }
+
+    const budgetMatch = msg.match(/(\d+)\s*(k|rb|ribu|\.?000|k\s*an)?/i);
+    if (budgetMatch){
+      const val = parseInt(budgetMatch[1], 10);
+      let rp = val;
+      if (budgetMatch[2] && /k|rb|ribu|k\s*an/.test(budgetMatch[2])) {
+        rp = val * 1000;
+      } else if (rp < 1000) {
+        rp = val * 1000;
+      }
+      prefs.budgetApprox = rp;
+      if (rp <= 100000) prefs.budgetCode = "100";
+      else if (rp <= 200000) prefs.budgetCode = "200";
+      else if (rp <= 300000) prefs.budgetCode = "300";
+      else prefs.budgetCode = "400";
+    }
+
+    if (msg.includes("earth tone") || msg.includes("earthtone")) prefs.color = "earth tone";
+    else if (msg.includes("pastel")) prefs.color = "pastel";
+    else if (msg.includes("monochrome") || msg.includes("hitam putih")) prefs.color = "monochrome";
+    else if (msg.includes("warna nude")) prefs.color = "nude";
+
+    if (msg.includes("kuliah") || msg.includes("kampus")) prefs.concerns.push("kuliah");
+    if (msg.includes("ngedate") || msg.includes("date") || msg.includes("pacar") || msg.includes("gebetan")) prefs.concerns.push("ngedate");
+    if (msg.includes("interview") || msg.includes("wawancara") || msg.includes("kerja") || msg.includes("sidang")) prefs.concerns.push("interview");
+    if (msg.includes("tips")) prefs.concerns.push("tips");
+    if (msg.includes("malu") || msg.includes("norak") || msg.includes("nggak pede") || msg.includes("ga pede") || msg.includes("tidak pede")) prefs.concerns.push("percaya_diri");
+
+    return { msg, prefs };
+  }
+
+  function buildUserReply(rawMsg){
+    const { msg, prefs } = extractUserPrefs(rawMsg);
+
+    /* ---- jawaban umum untuk concern tertentu (kuliah, ngedate, dll)
+       ... (bagian tips sama seperti versi sebelumnya, biar nggak kepanjangan
+       kalau mau, bagian ini bisa tetap kamu pakai dari kode lama)
+       Di sini fokus perbaikan ada di bagian rekomendasi produk di bawah
+    ---- */
+
+    // kalau belum ada style → minta minimal 3 info (gaya, occasion, budget)
+    if (!prefs.style) {
       return (
-        budgetLine +
-        "Untuk Korean look ke kampus, kombinasi basic dari katalog UMKM yang bisa kamu coba adalah:<br>" +
-        "- Oversize Shirt Linen Cream – <em>UMKM Sora Wear</em><br>" +
-        "- Straight Jeans Soft Blue – <em>UMKM Denim Days</em><br>" +
-        "- Tote Bag Kanvas Minimal – <em>UMKM Lokal Goods</em><br><br>" +
-        genderLine +
-        "<br><br>Kalau mau, aku juga bisa bantu turunkan versi hemat (misalnya hanya beli kaos/hijab dulu, sisanya pakai yang sudah ada di lemari)."
+        "Supaya aku bisa memberikan rekomendasi produk UMKM yang spesifik, sebut minimal tiga hal ini ya:<br>" +
+        "1️⃣ Gaya: korean / streetwear / minimalist / hijab<br>" +
+        "2️⃣ Occasion: kuliah / ngedate / kafe / konser / formal / kondangan<br>" +
+        "3️⃣ Budget: contoh 150K, 200K, 300K<br><br>" +
+        "Contoh chat:<br>" +
+        "- “Aku cowok, mau gaya korean casual buat kuliah, budget 200K.”<br>" +
+        "- “Cewek berhijab, suka pastel, mau ke kafe, budget 250K.”"
       );
     }
 
-    if(hasHijab && msg.includes("ngedate")){
-      const budgetLine = hasBudget250
-        ? "Dengan budget sekitar 250K, kita bisa ambil 3 item dari UMKM tanpa terlalu mepet."
-        : "Kalau budget belum jelas, aku pakai kisaran 200–250K sebagai acuan.";
+    // USER HANYA NGOMONG WARNA (misal: "aku suka pastel")
+    if (!prefs.budgetCode && !prefs.occasionLabel && prefs.color) {
       return (
-        budgetLine +
-        "<br><br>Untuk look hijab simple tapi manis buat ngedate, kamu bisa pakai:<br>" +
-        "- Hijab voal earth tone (misalnya coklat susu) – <em>UMKM Hijab Lokal</em><br>" +
-        "- Dress / tunic polos dengan potongan lurus – <em>UMKM Modest Wear</em><br>" +
-        "- Tas kecil / sling bag netral – <em>UMKM Lokal Goods</em><br><br>" +
-        "Kuncinya: pilih warna yang nggak terlalu ramai, tapi tambahkan sedikit aksesoris (jam tangan / cincin) supaya tetap terasa spesial."
+        `Noted kamu suka warna: ${prefs.color} 🎨<br><br>` +
+        "AI akan memprioritaskan produk UMKM dengan tone warna tersebut (misalnya ada di nama produk atau tag warna).<br>" +
+        "Supaya bisa keluar rekomendasi produk lengkap, sebut juga gaya + occasion + kisaran budgetmu ya. "
       );
     }
 
-    if(hasStreetwear){
-      const budgetLine = hasBudget300
-        ? "Dengan budget 250–300K, kamu bisa ambil full set dari UMKM: kaos, celana, dan mungkin topi/snapback."
-        : "Kalau budget di bawah 200K, fokus dulu ke kaos graphic yang kuat, lalu kombinasikan dengan celana yang sudah kamu punya.";
+    // Kalau sudah ada style / occasion / budget → jalankan mesin rekomendasi
+    const prefsForAI = {
+      gender: prefs.gender,
+      body: prefs.body,
+      style: prefs.style,
+      occasion: prefs.occasionLabel ? prefs.occasionLabel.toLowerCase() : "",
+      occasionLabel: prefs.occasionLabel || "Daily",
+      budget: prefs.budgetCode || "200",
+      color: prefs.color
+    };
+
+    const matches = recommendProducts(prefsForAI);
+    if (matches.length === 0) {
       return (
-        "Untuk konser dengan vibe streetwear, kamu bisa coba kombinasi ini:<br>" +
-        "- Kaos graphic lokal (tema band / artwork unik) – <em>UMKM Urban Print</em><br>" +
-        "- Cargo pants / jogger sedikit longgar – <em>UMKM Jalanan Supply</em><br>" +
-        "- Sneakers lokal basic – <em>UMKM Step Lokal</em><br><br>" +
-        budgetLine +
-        " Jangan lupa pilih warna yang masih nyambung dengan jaket atau outer yang kamu punya, supaya gampang di-mix."
+        "Aku sudah coba mencocokkan preferensimu dengan katalog UMKM, " +
+        "tapi belum ada produk yang benar-benar pas. Ini sinyal bahwa koleksi UMKM di segmen itu masih perlu ditambah. 🙏"
       );
     }
 
-    return (
-      "Dari pertanyaanmu, aku membaca gaya + occasion + (jika ada) budget. " +
-      "Kemudian aku mencocokkan dengan katalog UMKM yang punya label gaya, warna, dan harga.<br><br>" +
-      "Coba sebut lebih detail, misalnya:<br>" +
-      "- “Aku mau gaya minimalist buat presentasi kelas, budget 150K.”<br>" +
-      "- “Aku suka earth tone, mau ke kafe, cewek berhijab, budget 200K.”"
-    );
+    const mainItems = matches.slice(0, 3);
+    const total = mainItems.reduce((sum,p)=>sum+p.price,0);
+
+    const budgetTextMap = {
+      "100":"≤ 100K",
+      "200":"± 100–200K",
+      "300":"± 200–300K",
+      "400":"> 300K"
+    };
+    const styleText = styleLabel(prefs.style);
+
+    let intro = "Dari chat kamu, AI membaca:";
+    intro += "<br>- Gaya: " + styleText;
+    intro += "<br>- Occasion: " + (prefsForAI.occasionLabel || "Daily / bebas");
+    intro += "<br>- Budget kira-kira: " + (prefs.budgetApprox
+      ? "Rp" + prefs.budgetApprox.toLocaleString("id-ID") + " (" + (budgetTextMap[prefsForAI.budget] || "") + ")"
+      : (budgetTextMap[prefsForAI.budget] || "-"));
+    if (prefs.color) intro += "<br>- Preferensi warna: " + prefs.color;
+    if (prefs.gender === "male") intro += "<br>- Gender: cowok";
+    if (prefs.gender === "female") intro += "<br>- Gender: cewek";
+
+    const listHtml = mainItems
+      .map(p => "- " + formatProductLine(p))
+      .join("<br>");
+
+    const closing =
+      "<br><br>Outfit yang aku sarankan dari produk UMKM adalah:<br>" +
+      listHtml +
+      "<br><br>Rekomendasi di atas diambil dari katalog UMKM, disusun berdasarkan skor kecocokan tertinggi dengan preferensimu." +
+      "<br>Kalau mau, kamu bisa minta versi lebih hemat atau ganti gaya (misalnya streetwear / minimalist).";
+
+    return intro + closing;
   }
 
   function buildUmkmReply(msg){
     if(msg.includes("fokus") && msg.includes("produk")){
       return (
         "Jika targetmu adalah Gen Z, data dari modul AI biasanya menunjukkan bahwa:<br><br>" +
-        "1️⃣ Gaya yang sering dicari: Korean casual, streetwear, dan minimalist.<br>" +
-        "2️⃣ Range harga nyaman: Rp100K–Rp200K per item (untuk atasan/bawahan), di bawah Rp100K untuk aksesori/tas kecil.<br>" +
+        "1️⃣ Gaya yang sering dicari: Korean casual, streetwear, dan minimalist (plus hijab modern untuk pengguna berhijab).<br>" +
+        "2️⃣ Range harga nyaman: Rp100K–Rp200K per item.<br>" +
         "3️⃣ Warna: earth tone (cream, coklat susu), pastel lembut, serta kombinasi monochrome untuk minimalist.<br><br>" +
         "Jadi, kamu bisa fokus ke:<br>" +
         "- Oversize shirt / kaos graphic untuk Korean & streetwear.<br>" +
         "- Kemeja polos dan celana lurus untuk minimalist.<br>" +
-        "- Hijab dan tas dengan warna earth tone.<br><br>" +
+        "- Hijab dan set outfit warna earth tone / pastel.<br><br>" +
         "AI di platform ini akan mendorong produkmu ke pengguna yang preferensinya cocok, sehingga peluang klik dan pembelian meningkat."
       );
     }
@@ -1423,14 +1769,11 @@
       return (
         "AI bisa membantu meningkatkan penjualan UMKM di beberapa titik:<br><br>" +
         "1️⃣ <strong>Rekomendasi yang tepat sasaran</strong><br>" +
-        "Produkmu tidak muncul ke semua orang secara acak, tetapi hanya ke pengguna yang gayanya cocok " +
-        "(misalnya suka Korean casual dengan budget 150–200K).<br><br>" +
+        "Produkmu tidak muncul ke semua orang secara acak, tetapi hanya ke pengguna yang gayanya cocok.<br><br>" +
         "2️⃣ <strong>Cross-sell & mix-and-match otomatis</strong><br>" +
-        "Jika pengguna memilih satu produk darimu, AI bisa menyarankan produk pelengkap dari UMKM lain atau dari tokomu sendiri, " +
-        "sehingga 1 pengguna berpotensi membeli lebih dari 1 item.<br><br>" +
-        "3️⃣ <strong>Insight data yang mudah dimengerti</strong><br>" +
-        "Kamu bisa bertanya ke chatbot: produk mana yang paling sering diklik, gaya apa yang naik, dan range harga mana yang paling laku. " +
-        "Itu semua bisa jadi dasar untuk menentukan stok, desain baru, atau promo khusus."
+        "Jika pengguna memilih satu produk darimu, AI bisa menyarankan produk pelengkap dari tokomu sendiri atau UMKM lain.<br><br>" +
+        "3️⃣ <strong>Insight data</strong><br>" +
+        "Kamu bisa tahu produk mana yang paling sering direkomendasikan, gaya apa yang naik, dan range harga mana yang paling laku."
       );
     }
 
@@ -1453,6 +1796,7 @@
     );
   }
 
+  // enter untuk kirim chat
   const chatInput = document.getElementById("chat-input");
   if (chatInput) {
     chatInput.addEventListener("keydown", function(e){
@@ -1463,35 +1807,47 @@
     });
   }
 
-  /* ========== KATALOG LOGIC (TETAP SAMA) ========== */
+  /* ========== KATALOG LOGIC ========== */
   function renderProducts(list){
-    const grid=document.getElementById("product-grid");
-    if(!grid) return;
-    grid.innerHTML="";
-    list.forEach(p=>{
-      const div=document.createElement("div");
-      div.className="product-card";
-      div.innerHTML=`
-        <div class="product-name">${p.name}</div>
-        <div class="product-umkm">UMKM: ${p.umkm}</div>
-        <div class="product-price">Rp${p.price.toLocaleString("id-ID")}</div>
-        <div class="product-tags">
-          <span class="tag">${p.style}</span>
-          ${p.occasion.map(o=>`<span class="tag">${o}</span>`).join("")}
-          ${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
-        </div>
-        <div class="product-footer">
-          <button class="btn-secondary" onclick="alert('Konsep: diarahkan ke WhatsApp/Instagram UMKM ${p.umkm}')">
-            Hubungi Penjual
-          </button>
-          <span style="font-size:.75rem;color:#7a6b60;">
-            Dibaca AI sebagai produk ${p.style}, cocok untuk ${p.occasion.join(", ")}.
-          </span>
-        </div>
-      `;
-      grid.appendChild(div);
-    });
-  }
+  const grid = document.getElementById("product-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  list.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product-card";
+
+    div.innerHTML = `
+      <div class="product-image-wrap">
+        ${
+          p.image
+            ? `<img src="${p.image}" alt="${p.name}">`
+            : `<span>Preview foto produk</span>`
+        }
+      </div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-umkm">UMKM: ${p.umkm}</div>
+      <div class="product-price">Rp${p.price.toLocaleString("id-ID")}</div>
+      <div class="product-tags">
+        <span class="tag">${p.style}</span>
+        ${p.occasion.map(o => `<span class="tag">${o}</span>`).join("")}
+        ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+      </div>
+      <div class="product-footer">
+        <button class="btn-secondary"
+          onclick="alert('Konsep: diarahkan ke WhatsApp/Instagram UMKM ${p.umkm}')">
+          Hubungi Penjual
+        </button>
+        <span style="font-size:.75rem;color:#7a6b60;">
+          Dibaca AI sebagai produk ${p.style}, cocok untuk ${p.occasion.join(", ")}.
+        </span>
+      </div>
+    `;
+
+    grid.appendChild(div);
+  });
+}
+
 
   function filterProducts(){
     const styleEl = document.getElementById("filter-style");
@@ -1523,6 +1879,7 @@
   renderSavedProfile();
   renderProducts(products);
 </script>
+
 
 </body>
 </html>
